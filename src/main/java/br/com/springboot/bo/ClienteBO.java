@@ -1,4 +1,4 @@
-package br.com.springboot.BO;
+package br.com.springboot.bo;
 
 import java.util.List;
 
@@ -21,8 +21,8 @@ public class ClienteBO implements CRUD<Cliente, Long> {
 	}
 
 	@Override
-	public List<Cliente> lista() {
-		return dao.lista();
+	public List<Cliente> listaTodos() {
+		return dao.listaTodos();
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class ClienteBO implements CRUD<Cliente, Long> {
 	public void remove(Cliente cliente) {
 		dao.remove(cliente);
 	}
-
+	
 	public void inativa(Cliente cliente) {
 		cliente.setAtivo(false);
 		dao.atualiza(cliente);
@@ -49,5 +49,4 @@ public class ClienteBO implements CRUD<Cliente, Long> {
 		cliente.setAtivo(true);
 		dao.atualiza(cliente);
 	}
-
 }
