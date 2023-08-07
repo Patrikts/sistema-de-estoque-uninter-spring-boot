@@ -7,15 +7,14 @@ import org.springframework.stereotype.Service;
 
 import br.com.springboot.dao.CRUD;
 import br.com.springboot.dao.FornecedorDAO;
-import br.com.springboot.model.Cliente;
 import br.com.springboot.model.Fornecedor;
 
 @Service
 public class FornecedorBO implements CRUD<Fornecedor, Long> {
-
+	
 	@Autowired
 	private FornecedorDAO dao;
-
+	
 	@Override
 	public Fornecedor pesquisaPeloId(Long id) {
 		return dao.pesquisaPeloId(id);

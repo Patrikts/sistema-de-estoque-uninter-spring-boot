@@ -16,39 +16,30 @@
 
    <div class="container">
       <div class="bg-light p-5 rounded">
-			<h1>Dados do Cliente</h1>
+			<h1>Dados do Fornecedor</h1>
 			<hr>
 			<div>
-				<form th:action="@{/clientes}" th:object="${cliente}" method="POST">
+				<form th:action="@{/fornecedores}" th:object="${fornecedor}" method="POST">
 					<input id="ativo" type="hidden" th:field="*{id}"/>
 					<div class="mb-3 form-check form-switch">
 						<label class="form-check-label" for="ativo">Registro ativo</label>
 						<input class="form-check-input" role="switch" id="ativo" type="checkbox" th:field="*{ativo}"/>
 					</div>
 					<div class="mb-6">
-						<label class="form-label" for="nome">Nome</label>
-						<input class="form-control" id="nome" type="text" th:field="*{nome}"/>
-						<span style="color: red" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+						<label class="form-label" for="nomeFantasia">Nome fantasia</label>
+						<input class="form-control" id="nomeFantasia" type="text" th:field="*{nomeFantasia}"/>
+						<span style="color: red" th:if="${#fields.hasErrors('nomeFantasia')}" th:errors="*{nomeFantasia}"></span>
+					</div>
+					<div class="mb-6">
+						<label class="form-label" for="razaoSocial">Razão Social</label>
+						<input class="form-control" id="razaoSocial" type="text" th:field="*{razaoSocial}"/>
+						<span style="color: red" th:if="${#fields.hasErrors('razaoSocial')}" th:errors="*{razaoSocial}"></span>
 					</div>
 					<div class="row">
 						<div class="col-4 mb-3">
-							<label class="form-label" for="cpf">CPF</label>
-							<input class="form-control" id="cpf" type="text" th:field="*{cpf}" />
-							<span style="color: red" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
-						</div>
-						<div class="col-4 mb-3">
-							<label class="form-label" for="dataDeNascimento">Data de Nascimento</label>
-							<input class="form-control" id="dataDeNascimento" type="date" th:field="*{dataDeNascimento}" />
-							<span style="color: red" th:if="${#fields.hasErrors('dataDeNascimento')}" th:errors="*{dataDeNascimento}"></span>
-						</div>
-						<div class="col-4 mb-3">
-							<label class="form-label" for="sexo">Sexo</label>
-							<select class="form-select" id="sexo" th:field="*{sexo}">
-								<option value="">Selecione uma opção</option>
-								<option value="MASCULINO">Masculino</option>
-								<option value="FEMININO">Feminino</option>
-							</select>
-							<span style="color: red" th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}"></span>
+							<label class="form-label" for="cnpj">CNPJ</label>
+							<input class="form-control" id="cnpj" type="text" th:field="*{cnpj}" />
+							<span style="color: red" th:if="${#fields.hasErrors('cnpj')}" th:errors="*{cnpj}"></span>
 						</div>
 					</div>
 					<div class="row">

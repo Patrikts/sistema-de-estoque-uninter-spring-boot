@@ -25,8 +25,8 @@ public class FornecedorDAO implements CRUD<Fornecedor, Long> {
 
 	@Override
 	public List<Fornecedor> listaTodos() {
-		Query query = em.createQuery("select : from Fornecedor f");
-		return  query.getResultList();
+		Query query = em.createQuery("select f from Fornecedor f");
+		return query.getResultList();
 	}
 
 	@Override
@@ -43,5 +43,4 @@ public class FornecedorDAO implements CRUD<Fornecedor, Long> {
 	public void remove(Fornecedor fornecedor) {
 		em.remove(fornecedor);
 	}
-
 }

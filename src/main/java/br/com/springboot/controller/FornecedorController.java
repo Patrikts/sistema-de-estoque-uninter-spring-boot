@@ -2,8 +2,6 @@ package br.com.springboot.controller;
 
 import javax.validation.Valid;
 
-//import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,18 +30,19 @@ public class FornecedorController {
 	}
 	
 	@RequestMapping(value = "", method=RequestMethod.POST)
-	public String salva(@Valid @ModelAttribute Fornecedor fornecedor, 
-			BindingResult result, RedirectAttributes attr) {
+	public String salva(@Valid @ModelAttribute Fornecedor fornecedor,
+			BindingResult result,
+			RedirectAttributes attr) {
 		if (result.hasErrors())
 			return "fornecedor/formulario";
 		
 		if (fornecedor.getId() == null) {
 			fornecedorBO.insere(fornecedor);
-			attr.addFlashAttribute("feedback", "Fornecedor foi cadastrado com sucesso");
+			attr.addFlashAttribute("feedback", "O fornecedor foi cadastrado com sucesso");
 		}
 		else { 
 			fornecedorBO.atualiza(fornecedor);
-			attr.addFlashAttribute("feedback", "Fornecedor foi atualizado com sucesso");
+			attr.addFlashAttribute("feedback", "O fornecedor foi atualizado com sucesso");
 		}
 		return "redirect:/fornecedores";
 	}
@@ -66,7 +65,6 @@ public class FornecedorController {
 	
 	@RequestMapping(value = "/inativa/{id}", method = RequestMethod.GET)
 	public String inativa(@PathVariable("id") Long id, RedirectAttributes attr) {
-		System.out.println(id);
 		try {
 			Fornecedor fornecedor = fornecedorBO.pesquisaPeloId(id); 
 			fornecedorBO.inativa(fornecedor);
@@ -79,7 +77,6 @@ public class FornecedorController {
 	
 	@RequestMapping(value = "/ativa/{id}", method = RequestMethod.GET)
 	public String ativa(@PathVariable("id") Long id, RedirectAttributes attr) {
-		System.out.println(id);
 		try {
 			Fornecedor fornecedor = fornecedorBO.pesquisaPeloId(id); 
 			fornecedorBO.ativa(fornecedor);
