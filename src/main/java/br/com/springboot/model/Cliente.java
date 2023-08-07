@@ -1,7 +1,5 @@
 package br.com.springboot.model;
 
-
-
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -42,7 +40,7 @@ public class Cliente {
 	private LocalDate dataDeNascimento;
 	
 	@Enumerated(EnumType.STRING)
-	@NotNull(message = "Informe o sexo")
+	@NotNull(message = "informe o sexo")
 	private Sexo sexo;
 	
 	@Column(length = 14)
@@ -142,6 +140,10 @@ public class Cliente {
 		return cliente;
 	}
 }
+
+
+
+
 
 
 

@@ -23,13 +23,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 		auth
 			.inMemoryAuthentication()
-			.withUser("admin")
-			.password(passwordEncoder().encode("12345"))
-			.roles("ADMINISTRADOR")
-		.and()
-			.withUser("user")
-			.password(passwordEncoder().encode("12345"))
-			.roles("USUARIO");
+				.withUser("admin")
+				.password(passwordEncoder().encode("12345"))
+				.roles("ADMINISTRADOR")
+			.and()
+				.withUser("user")
+				.password(passwordEncoder().encode("12345"))
+				.roles("USUARIO");				
 	}
 	
 	@Override
@@ -50,5 +50,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.logoutSuccessUrl("/login");
 	}
-	
 }
