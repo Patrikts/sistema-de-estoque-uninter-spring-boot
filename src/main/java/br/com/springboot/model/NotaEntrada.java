@@ -18,14 +18,14 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @Entity
 @Table(name="nota_entrada")
 public class NotaEntrada {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	@Column(nullable=false, name="data_hora", columnDefinition = "DATETIME")
-	private LocalDateTime datahora;
+	private LocalDateTime dataHora;
 	
 	@ManyToOne
 	@JoinColumn(name="fornecedor_id", nullable=false)
@@ -42,12 +42,12 @@ public class NotaEntrada {
 		this.id = id;
 	}
 
-	public LocalDateTime getDatahora() {
-		return datahora;
+	public LocalDateTime getDataHora() {
+		return dataHora;
 	}
 
-	public void setDatahora(LocalDateTime datahora) {
-		this.datahora = datahora;
+	public void setDataHora(LocalDateTime dataHora) {
+		this.dataHora = dataHora;
 	}
 
 	public Fornecedor getFornecedor() {
@@ -65,5 +65,4 @@ public class NotaEntrada {
 	public void setTotal(Float total) {
 		this.total = total;
 	}
-	
 }
