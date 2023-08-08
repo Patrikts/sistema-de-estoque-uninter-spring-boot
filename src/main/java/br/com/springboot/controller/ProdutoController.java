@@ -22,7 +22,7 @@ import br.com.springboot.model.Produto;
 @Controller
 @RequestMapping("/produtos")
 public class ProdutoController {
-	
+
 	@Autowired
 	private ProdutoBO produtoBO;
 
@@ -32,27 +32,28 @@ public class ProdutoController {
 		model.addAttribute("categorias", Arrays.asList(Categoria.values()));
 		return new ModelAndView("/produto/formulario", model);
 	}
-	
-	@RequestMapping(value = "", method=RequestMethod.POST)
-	public String salva(@Valid @ModelAttribute Produto produto, BindingResult result, RedirectAttributes attr) {
-		if (result.hasErrors())
+
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public String salva(@Valid @ModelAttribute Produto produto, BindingResult result, RedirectAttributes attr, ModelMap  model) {
+		if (result.hasErrors()) {
+			model.addAttribute("categorias", Arrays.asList(Categoria.values()));
 			return "produto/formulario";
-		
+		}
+
 		if (produto.getId() == null) {
 			produtoBO.insere(produto);
 			attr.addFlashAttribute("feedback", "O produto foi cadastrado com sucesso");
-		}
-		else { 
+		} else {
 			produtoBO.atualiza(produto);
 			attr.addFlashAttribute("feedback", "O produto foi atualizado com sucesso");
 		}
 		return "redirect:/produtos";
 	}
-	
-	@RequestMapping(value = "", method=RequestMethod.GET)
+
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView lista(ModelMap model) {
 		model.addAttribute("produtos", produtoBO.listaTodos());
-		return new ModelAndView("/produto/lista", model);		
+		return new ModelAndView("/produto/lista", model);
 	}
 
 	@RequestMapping(value = "/edita/{id}", method = RequestMethod.GET)
@@ -65,11 +66,11 @@ public class ProdutoController {
 		}
 		return new ModelAndView("/produto/formulario", model);
 	}
-	
+
 	@RequestMapping(value = "/inativa/{id}", method = RequestMethod.GET)
 	public String inativa(@PathVariable("id") Long id, RedirectAttributes attr) {
 		try {
-			Produto produto = produtoBO.pesquisaPeloId(id); 
+			Produto produto = produtoBO.pesquisaPeloId(id);
 			produtoBO.inativa(produto);
 			attr.addFlashAttribute("feedback", "Produto foi inativado com sucesso");
 		} catch (Exception e) {
@@ -77,12 +78,12 @@ public class ProdutoController {
 		}
 		return "redirect:/produtos";
 	}
-	
+
 	@RequestMapping(value = "/ativa/{id}", method = RequestMethod.GET)
 	public String ativa(@PathVariable("id") Long id, RedirectAttributes attr) {
 		System.out.println(id);
 		try {
-			Produto produto = produtoBO.pesquisaPeloId(id); 
+			Produto produto = produtoBO.pesquisaPeloId(id);
 			produtoBO.ativa(produto);
 			attr.addFlashAttribute("feedback", "Produto foi ativado com sucesso");
 		} catch (Exception e) {
@@ -90,5 +91,5 @@ public class ProdutoController {
 		}
 		return "redirect:/produtos";
 	}
-	
+
 }
