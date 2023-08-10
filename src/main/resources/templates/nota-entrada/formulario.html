@@ -3,17 +3,15 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Sistema de Estoque</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-		  rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-		  crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<style>
-		body {
-			padding-top: 4.5rem;
-		}
-    </style>
+        body {
+          padding-top: 4.5rem;
+        }
+    </style>
 </head>
 <body>
-    <div th:replace="fragments/menu :: menu"></div>
+   <div th:replace="fragments/menu :: menu"></div>
 
 	<div class="container">
 		<div class="bg-light p-5 rounded">
@@ -23,45 +21,78 @@
 				<form th:action="@{/nota-entrada}" method="POST">
 					<input id="id" type="hidden" th:field="*{notaEntrada.id}"/>
 					<div th:if="${!#strings.isEmpty(feedback)}" class="alert alert-success" role="alert">
-	  					<span th:text="${feedback}"></span>
+	  					<span th:text="${feedback}"></span>
 					</div>
 					<div class="row">
 						<div class="col-4 mb-3">
 							<label class="form-label" for="fornecedor">Fornecedor</label>
 							<select class="form-select" id="fornecedor" th:field="*{notaEntrada.fornecedor.id}">
 								<option value="">Selecione um fornecedor</option>
-								<option th:each="fornecedor : ${fornecedores}"
-								        th:value="${fornecedor.id}"
-								        th:text="${fornecedor.nomeFantasia}"></option>
+								<option th:each="fornecedor : ${fornecedores}" th:value="${fornecedor.id}" th:text="${fornecedor.nomeFantasia}"></option>
 							</select>
-							<span style="color: red"
-							      th:if="${#fields.hasErrors('notaEntrada.fornecedor')}"
-							      th:errors="*{notaEntrada.fornecedor}"></span>
+							<span style="color: red" th:if="${#fields.hasErrors('notaEntrada.fornecedor')}" th:errors="*{notaEntrada.fornecedor}"></span>
 						</div>
 						<div class="col-4 mb-3">
 							<label class="form-label" for="dataHora">Data da compra</label>
-							<input class="form-control" id="dataHora" type="datetime-local"
-							       th:field="*{notaEntrada.dataHora}"/>
-							<span style="color: red"
-							      th:if="${#fields.hasErrors('notaEntrada.dataHora')}"
-							      th:errors="*{notaEntrada.dataHora}"></span>
+							<input class="form-control" id="dataHora" type="datetime-local" th:field="*{notaEntrada.dataHora}"/>
+							<span style="color: red" th:if="${#fields.hasErrors('notaEntrada.dataHora')}" th:errors="*{notaEntrada.dataHora}"></span>
 						</div>
 						<div class="col-4 mb-3">
 							<label class="form-label" for="total">Total (R$)</label>
-							<input class="form-control" id="total" th:field="*{notaEntrada.total}" step="any"
-							       type="number" readonly/>
-							<span style="color: red" th:if="${#fields.hasErrors('notaEntrada.total')}"
-							      th:errors="*{notaEntrada.total}"></span>
+							<input class="form-control" id="total" th:field="*{notaEntrada.total}" step="any" type="number" readonly/>
+							<span style="color: red" th:if="${#fields.hasErrors('notaEntrada.total')}" th:errors="*{notaEntrada.total}"></span>
 						</div>
+					</div>
+					<div th:if="${notaEntrada.id != null}" class="mb-3">
+						<a class="btn btn-sm btn-success" th:href="@{/nota-entrada/{id}/item(id=${notaEntrada.id})}">Adicionar produto</a>
+						<table class="table table-hover">
+						    <thead>
+						        <tr>
+						            <td><b>PRODUTO</b></td>
+						            <td><b>QTDE</b></td>
+						            <td><b>VALOR UNT (R$)</b></td>
+									<td><b>VALOR TOTAL (R$)</b></td>
+									<td></td>
+									<td></td>
+						        </tr>
+						    </thead>
+						    <tbody>
+						        <tr th:each="item : ${notaEntrada.itens}">
+						          <td th:text="${item.produto.nome}"></td>
+						            <td th:text="${item.quantidade}"></td>
+						            <td th:text="${#numbers.formatDecimal(item.valorUnitario, 0, 'POINT', 2, 'COMMA')}"></td>
+						            <td th:text="${#numbers.formatDecimal(item.valorTotal, 0, 'POINT', 2, 'COMMA')}"></td>
+						            <td>
+						            	<a class="btn btn-sm btn-secondary" th:href="@{/nota-entrada-item/edita/{id}(id=${item.id})}">Editar</a>
+						            </td>
+						            <td>
+						            	<a class="btn btn-sm btn-secondary" th:href="@{/nota-entrada-item/remove/{id}(id=${item.id})}">Remover</a>
+						            </td>
+						       </tr>
+						     </tbody>
+						</table>
+					</div>
+					<div class="mb-3">
 						<input class="btn btn-primary" type="submit" value="Salvar"/>
 					</div>
 				</form>
-				
-				<a class="btn btn-sm btn-success" th:ref="@{/nota-entrada/{id}/item(id=${notaEntrada.id})}">Adicione um produto</a>
 			</div>
 		</div>
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script>
+		function formataValor(campo) {
+			var valor = parseFloat($(campo).val());
+			if ( !isNaN(valor) ) {
+				$(campo).val(valor.toFixed(2));
+			}
+		}
+		$(document).ready(function() {
+			formataValor("#total");
+		});
+	</script>
 </body>
 </html>

@@ -39,5 +39,28 @@ public class NotaEntradaItemBO implements CRUD<NotaEntradaItem, Long>{
 	public void remove(NotaEntradaItem notaEntradaItem) {
 		dao.remove(notaEntradaItem);
 	}
+	
+	public boolean itemJaAdicionado(NotaEntradaItem notaEntradaItem) {
+		Long notaEntradaId = notaEntradaItem.getNotaEntrada().getId();
+		List<NotaEntradaItem> itens = dao.listaItensNota(notaEntradaId);
+		
+		Long produtoId = notaEntradaItem.getProduto().getId();
+		
+		if (notaEntradaItem.getId() == null) {
+			for (NotaEntradaItem item : itens) {
+				if (item.getProduto().getId() == produtoId) {
+					return true;
+				}
+			} 
+		} else {
+			Long notaEntradaItemId = notaEntradaItem.getId();
+			for (NotaEntradaItem item : itens) {
+				if (item.getProduto().getId() == produtoId && notaEntradaItemId == item.getId()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 }

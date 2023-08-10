@@ -72,5 +72,22 @@ public class NotaEntradaController {
 		model.addAttribute("produtos", produtoBO.listaTodos());
 		return new ModelAndView("/nota-entrada-item/formulario", model);
 	}
+	
+	@RequestMapping(value="/edita/{id}", method=RequestMethod.GET)
+	public ModelAndView edita(@PathVariable("id") Long id, ModelMap model) {
+		model.addAttribute("notaEntradaItem", new NotaEntradaItem());
+		model.addAttribute("fornecedores", fornecedorBO.listaTodos());
+		model.addAttribute("notaEntrada", notaEntradaBO.pesquisaPeloId(id));
+		return new ModelAndView("/nota-entrada/formulario", model);
+		}
+	
+	@RequestMapping(value="/remove/{id}", method=RequestMethod.GET)
+	public String remove(@PathVariable("id") Long id, RedirectAttributes attr) {
+		NotaEntrada ne = notaEntradaBO.pesquisaPeloId(id);
+		notaEntradaBO.remove(ne);
+		attr.addFlashAttribute("feedback", "Nota entrada removida com sucesso");
+		return "redirect:/nota-entrada";
+	}
 
-}
+	}
+
