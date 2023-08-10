@@ -55,7 +55,7 @@ public class NotaEntradaItemBO implements CRUD<NotaEntradaItem, Long>{
 		} else {
 			Long notaEntradaItemId = notaEntradaItem.getId();
 			for (NotaEntradaItem item : itens) {
-				if (item.getProduto().getId() == produtoId && notaEntradaItemId == item.getId()) {
+				if (item.getProduto().getId() == produtoId && notaEntradaItemId != item.getId()) {
 					return true;
 				}
 			}

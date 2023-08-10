@@ -43,5 +43,4 @@ public class ProdutoDAO implements CRUD<Produto, Long> {
 	public void remove(Produto produto) {
 		em.remove(produto);
 	}
-
 }

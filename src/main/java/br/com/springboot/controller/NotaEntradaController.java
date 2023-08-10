@@ -25,27 +25,34 @@ public class NotaEntradaController {
 
 	@Autowired
 	private NotaEntradaBO notaEntradaBO;
-
+	
 	@Autowired
 	private FornecedorBO fornecedorBO;
-
+	
 	@Autowired
 	private ProdutoBO produtoBO;
-
-	@RequestMapping(value = "/novo", method = RequestMethod.GET)
+	
+	@RequestMapping(value="/novo", method=RequestMethod.GET)
 	public ModelAndView novo(ModelMap model) {
 		model.addAttribute("notaEntrada", new NotaEntrada());
 		model.addAttribute("fornecedores", fornecedorBO.listaTodos());
 		return new ModelAndView("/nota-entrada/formulario", model);
 	}
-
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String salva(@Valid @ModelAttribute NotaEntrada notaEntrada, BindingResult result, RedirectAttributes attr) {
-
+	
+	@RequestMapping(value="", method=RequestMethod.POST)
+	public String salva(@Valid @ModelAttribute NotaEntrada notaEntrada,
+			BindingResult result,
+			RedirectAttributes attr,
+			ModelMap model) {
+		
+		if (notaEntrada.getFornecedor().getId() == null)
+			result.rejectValue("fornecedor", "field.required");
+		
 		if (result.hasErrors()) {
+			model.addAttribute("fornecedores", fornecedorBO.listaTodos());
 			return "/nota-entrada/formulario";
 		}
-
+		
 		if (notaEntrada.getId() == null) {
 			notaEntradaBO.insere(notaEntrada);
 			attr.addFlashAttribute("feedback", "A nota de entrada foi cadastrada com sucesso");
@@ -53,17 +60,17 @@ public class NotaEntradaController {
 			notaEntradaBO.atualiza(notaEntrada);
 			attr.addFlashAttribute("feedback", "Os dados da nota de entrada foram atualizados com sucesso");
 		}
-
+		
 		return "redirect:/nota-entrada";
 	}
-
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	
+	@RequestMapping(value="", method=RequestMethod.GET)
 	public ModelAndView lista(ModelMap model) {
 		model.addAttribute("notas", notaEntradaBO.listaTodos());
 		return new ModelAndView("/nota-entrada/lista", model);
 	}
 	
-	@RequestMapping(value = "/{id}/item", method = RequestMethod.GET)
+	@RequestMapping(value="/{id}/item", method=RequestMethod.GET)
 	public ModelAndView produto(@PathVariable("id") Long id, ModelMap model) {
 		NotaEntradaItem nei = new NotaEntradaItem();
 		NotaEntrada ne = notaEntradaBO.pesquisaPeloId(id);
@@ -79,7 +86,7 @@ public class NotaEntradaController {
 		model.addAttribute("fornecedores", fornecedorBO.listaTodos());
 		model.addAttribute("notaEntrada", notaEntradaBO.pesquisaPeloId(id));
 		return new ModelAndView("/nota-entrada/formulario", model);
-		}
+	}
 	
 	@RequestMapping(value="/remove/{id}", method=RequestMethod.GET)
 	public String remove(@PathVariable("id") Long id, RedirectAttributes attr) {
@@ -88,6 +95,4 @@ public class NotaEntradaController {
 		attr.addFlashAttribute("feedback", "Nota entrada removida com sucesso");
 		return "redirect:/nota-entrada";
 	}
-
-	}
-
+}

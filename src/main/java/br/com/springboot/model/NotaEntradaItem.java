@@ -24,12 +24,12 @@ public class NotaEntradaItem {
 	
 	@ManyToOne
 	@JoinColumn(name="nota_entrada_id")
-	@NotNull
+	@NotNull	
 	private NotaEntrada notaEntrada;
 	
 	@NotNull(message = "informe a quantidade")
 	private Integer quantidade;
-
+	
 	@NotNull(message = "informe o valor unitário")
 	private Float valorUnitario;
 	
@@ -82,5 +82,4 @@ public class NotaEntradaItem {
 	public void setValorTotal(Float valorTotal) {
 		this.valorTotal = valorTotal;
 	}
-	
 }

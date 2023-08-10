@@ -10,7 +10,7 @@ import br.com.springboot.dao.ProdutoDAO;
 import br.com.springboot.model.Produto;
 
 @Service
-public class ProdutoBO implements CRUD<Produto, Long>{
+public class ProdutoBO implements CRUD<Produto, Long> {
 
 	@Autowired
 	private ProdutoDAO dao;
@@ -28,6 +28,7 @@ public class ProdutoBO implements CRUD<Produto, Long>{
 	@Override
 	public void insere(Produto produto) {
 		dao.insere(produto);
+		
 	}
 
 	@Override
@@ -44,9 +45,10 @@ public class ProdutoBO implements CRUD<Produto, Long>{
 		produto.setAtivo(true);
 		dao.atualiza(produto);
 	}
-
+	
 	public void inativa(Produto produto) {
 		produto.setAtivo(false);
 		dao.atualiza(produto);
 	}
+	
 }
