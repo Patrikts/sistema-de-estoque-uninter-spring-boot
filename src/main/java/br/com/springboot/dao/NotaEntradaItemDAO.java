@@ -13,11 +13,10 @@ import br.com.springboot.model.NotaEntradaItem;
 
 @Repository
 @Transactional
-public class NotaEntradaItemDAO implements CRUD<NotaEntradaItem, Long>{
+public class NotaEntradaItemDAO implements CRUD<NotaEntradaItem, Long> {
 
 	@PersistenceContext
 	private EntityManager em;
-	
 	
 	@Override
 	public NotaEntradaItem pesquisaPeloId(Long id) {
@@ -45,10 +44,9 @@ public class NotaEntradaItemDAO implements CRUD<NotaEntradaItem, Long>{
 		em.remove(notaEntradaItem);
 	}
 
-	public List<NotaEntradaItem> listaItensNota (Long notaEntradaId) {
+	public List<NotaEntradaItem> listaItensNota(Long notaEntradaId) {
 		Query query = em.createQuery("from NotaEntradaItem n where n.notaEntrada.id = :notaEntradaId")
-					.setParameter("notaEntradaId", notaEntradaId);
+						.setParameter("notaEntradaId", notaEntradaId);
 		return query.getResultList();
 	}
-	
 }

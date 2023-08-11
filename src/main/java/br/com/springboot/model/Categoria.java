@@ -16,6 +16,4 @@ public enum Categoria {
 	public String getDescricao() {
 		return this.descricao;
 	}
-
 }
-

@@ -10,7 +10,7 @@ import br.com.springboot.dao.NotaEntradaItemDAO;
 import br.com.springboot.model.NotaEntradaItem;
 
 @Service
-public class NotaEntradaItemBO implements CRUD<NotaEntradaItem, Long>{
+public class NotaEntradaItemBO implements CRUD<NotaEntradaItem, Long> {
 
 	@Autowired
 	private NotaEntradaItemDAO dao;
@@ -51,7 +51,7 @@ public class NotaEntradaItemBO implements CRUD<NotaEntradaItem, Long>{
 				if (item.getProduto().getId() == produtoId) {
 					return true;
 				}
-			} 
+			}
 		} else {
 			Long notaEntradaItemId = notaEntradaItem.getId();
 			for (NotaEntradaItem item : itens) {
@@ -62,5 +62,5 @@ public class NotaEntradaItemBO implements CRUD<NotaEntradaItem, Long>{
 		}
 		return false;
 	}
-
+	
 }
